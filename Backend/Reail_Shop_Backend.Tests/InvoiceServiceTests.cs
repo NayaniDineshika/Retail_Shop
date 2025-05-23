@@ -1,0 +1,80 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Reail_Shop_Backend.Data;
+using Reail_Shop_Backend.DTOs;
+using Reail_Shop_Backend.Models;
+using Reail_Shop_Backend.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.InMemory;
+
+
+namespace Reail_Shop_Backend.Tests
+{
+    public class InvoiceServiceTests
+    {
+        private RetailDBContext _dbContext;
+        private InvoiceService _invoiceService;
+
+        [SetUp]
+        public void Setup()
+        {
+            var options = new DbContextOptionsBuilder<RetailDBContext>()
+                .UseInMemoryDatabase(databaseName: "RetailTestDB")
+            .Options;
+
+            _dbContext = new RetailDBContext(options);
+
+            // Seed products
+            _dbContext.Products.Add(new Product
+            {
+                ProductId = 1,
+                ProductName = "Test Product",
+                UnitPrice = 100,
+                ItemInvoice = new List<ItemInvoice>() // add this line
+            });
+
+            _dbContext.SaveChanges();
+
+            _invoiceService = new InvoiceService(_dbContext);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _dbContext.Database.EnsureDeleted();
+            _dbContext.Dispose();
+        }
+
+        [Test]
+        public async Task CreateInvoiceAsync_ValidDto_CreatesInvoiceCorrectly()
+        {
+            // Arrange
+            var dto = new CreateInvoiceDto
+            {
+                TransactionDate = DateTime.Now,
+                Items = new List<ItemInvoiceDto>
+                {
+                    new ItemInvoiceDto
+                    {
+                        ProductId = 1,
+                        Quantity = 2,
+                        Discount = 10
+                    }
+                }
+            };
+
+            // Act
+            var result = await _invoiceService.CreateInvoiceAsync(dto);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(200, result.TotalAmount);
+            Assert.AreEqual(180, result.BalanceAmount);
+            Assert.AreEqual(1, result.ItemInvoice.Count);
+        }
+
+    }
+}

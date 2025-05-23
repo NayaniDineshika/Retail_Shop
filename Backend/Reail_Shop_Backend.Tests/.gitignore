@@ -1,0 +1,20 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Visual Studio and IDE files
+.vs/
+*.suo
+*.user
+*.dbtcache.v2
+*.vsdx
+
+# Build and Metadata files
+bin/
+obj/
+*.v9.bin
+*.v9.suo
+*.v9.user
+*.cache
+*.vsidx
+*.dll

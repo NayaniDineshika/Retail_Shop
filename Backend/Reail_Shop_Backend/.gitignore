@@ -1,0 +1,81 @@
+bin/
+obj/
+appsettings*.json
+*.db
+.vs/
+*.log
+Properties/launchSettings.json
+# Ignore CI/CD configuration (optional)
+*.yml
+*.yaml
+
+# Node.js dependencies (if backend uses node/npm)
+backend/node_modules/
+
+# Build output
+backend/bin/
+backend/obj/
+
+# Environment files (sensitive information)
+backend/appsettings*.json
+backend/.env
+
+# IDE/editor-specific files
+backend/.vs/
+backend/Properties/launchSettings.json
+
+# Log files
+backend/*.log
+
+# Database files
+backend/*.db
+
+# Miscellaneous
+Thumbs.db
+
+
+# Node modules
+/node_modules/
+
+# Lock files (optional depending on use case)
+package-lock.json
+yarn.lock
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build output
+/build/
+/dist/
+
+# Test output
+/coverage/
+
+# Visual Studio and .NET generated files
+.vs/
+.vscode/
+.idea/
+
+# User-specific Visual Studio project settings
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Backup files
+*~

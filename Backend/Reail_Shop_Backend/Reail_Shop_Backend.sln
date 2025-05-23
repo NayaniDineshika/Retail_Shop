@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reail_Shop_Backend", "Reail_Shop_Backend.csproj", "{1691B3A5-3D28-4061-9A06-8067F3455B3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reail_Shop_Backend.Tests", "..\Reail_Shop_Backend.Tests\Reail_Shop_Backend.Tests.csproj", "{B492DA11-7870-4FA8-AC6C-B419CC7182CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1691B3A5-3D28-4061-9A06-8067F3455B3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1691B3A5-3D28-4061-9A06-8067F3455B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1691B3A5-3D28-4061-9A06-8067F3455B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1691B3A5-3D28-4061-9A06-8067F3455B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B492DA11-7870-4FA8-AC6C-B419CC7182CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B492DA11-7870-4FA8-AC6C-B419CC7182CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B492DA11-7870-4FA8-AC6C-B419CC7182CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B492DA11-7870-4FA8-AC6C-B419CC7182CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6911E9F-001E-4CB7-95C7-F5C077108678}
+	EndGlobalSection
+EndGlobal
