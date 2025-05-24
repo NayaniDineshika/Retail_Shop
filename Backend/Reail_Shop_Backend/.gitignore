@@ -79,3 +79,5 @@ Thumbs.db
 
 # Backup files
 *~
+#Migrationfile
+**/Migrations/
