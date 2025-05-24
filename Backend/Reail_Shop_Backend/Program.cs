@@ -17,6 +17,7 @@ builder.Services.AddDbContext<RetailDBContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IDiscountService, DiscountService>();
 
 builder.Services.AddCors(options =>
 {

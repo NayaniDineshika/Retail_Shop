@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.InMemory;
+using Moq;
+using Reail_Shop_Backend.Interfaces;
 
 
 namespace Reail_Shop_Backend.Tests
@@ -17,6 +19,7 @@ namespace Reail_Shop_Backend.Tests
     {
         private RetailDBContext _dbContext;
         private InvoiceService _invoiceService;
+        private Mock<IDiscountService> _discountServiceMock;
 
         [SetUp]
         public void Setup()
@@ -37,7 +40,10 @@ namespace Reail_Shop_Backend.Tests
 
             _dbContext.SaveChanges();
 
-            _invoiceService = new InvoiceService(_dbContext);
+            _discountServiceMock = new Mock<IDiscountService>();
+            _discountServiceMock.Setup(ds => ds.CalculateDiscount(100,2,10))
+                .Returns(90 *2);
+            _invoiceService = new InvoiceService(_dbContext, _discountServiceMock.Object);
         }
 
         [TearDown]

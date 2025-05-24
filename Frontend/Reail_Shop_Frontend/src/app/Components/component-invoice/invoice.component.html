@@ -8,7 +8,7 @@
         <form #itemForm="ngForm">
           <label for="item">Product Name:</label>
           <div>
-            <select class="product-input" [(ngModel)]="selectedProductName" (change)="onProductSelect()"
+            <select class="product-input" id="dropDown" [(ngModel)]="selectedProductName" (change)="onProductSelect()"
               name="productName" required>
               <option *ngFor="let product of products" [value]="product.productName">
                 {{ product.productName }}

@@ -11,10 +11,12 @@ namespace Reail_Shop_Backend.Services
     public class InvoiceService : IInvoiceService
     {
         private readonly RetailDBContext _dbContext;
+        private readonly IDiscountService _discountService;
 
-        public InvoiceService(RetailDBContext dbContext)
+        public InvoiceService(RetailDBContext dbContext, IDiscountService discountService)
         {
             _dbContext = dbContext;
+            _discountService = discountService;
         }
 
         public async Task<CustomerInvoice> CreateInvoiceAsync (CreateInvoiceDto dto)
@@ -31,8 +33,10 @@ namespace Reail_Shop_Backend.Services
                 var product = products.FirstOrDefault(p => p.ProductId == itemDto.ProductId);
 
                 //Calculate the total price and discounted price per item
+                var discountedPrice = _discountService.CalculateDiscount(
+                    product.UnitPrice, itemDto.Quantity, itemDto.Discount);
+
                 var totalProductPrice = product.UnitPrice * itemDto.Quantity;
-                decimal discountedPrice = totalProductPrice * (1 - itemDto.Discount / 100);
 
                 itemsInvoice.Add(new ItemInvoice
                 {
