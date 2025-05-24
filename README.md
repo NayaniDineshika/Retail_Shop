@@ -43,21 +43,21 @@ dotnet test
 
 
 Dependencies (NuGet Packages)
-    Microsoft.EntityFrameworkCore
-    Microsoft.EntityFrameworkCore.SqlServer (or MySQL provider if used)
-    Microsoft.EntityFrameworkCore.Tools
-    Microsoft.AspNetCore.Mvc
-    NUnit
-    Moq 
+    - Microsoft.EntityFrameworkCore
+    - Microsoft.EntityFrameworkCore.SqlServer (or MySQL provider if used)
+    - Microsoft.EntityFrameworkCore.Tools
+    - Microsoft.AspNetCore.Mvc
+    - NUnit
+    - Moq 
 
 
 Assumptions Made
-  Does not include any user authentication or authorization mechanisms.
-  Discounts are applied on the total price of each product item
-  Discounted Price per Item = Quantity × UnitPrice × (1 - DiscountPercentage/100)
-  Each invoice can contain one or more invoice items. Every invoice item must refer to an existing product in the product.
-  The transaction date must be entered manually by the user.
-  Users are not allowed to select a future date; only the current date or any past date can be used.
+  - Does not include any user authentication or authorization mechanisms.
+  - Discounts are applied on the total price of each product item
+  - Discounted Price per Item = Quantity × UnitPrice × (1 - DiscountPercentage/100)
+  - Each invoice can contain one or more invoice items. Every invoice item must refer to an existing product in the product.
+  - The transaction date must be entered manually by the user.
+  - Users are not allowed to select a future date; only the current date or any past date can be used.
 
 Page Screenshots
 ![](Screenshots/1.png)
