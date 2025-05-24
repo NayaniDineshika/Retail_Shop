@@ -1,3 +1,4 @@
+/* header */
 header{
     background-color: #17252A;
     color: white;
@@ -7,6 +8,7 @@ header{
     font-weight:800;
     font-size: 25px;
 }
+/*body*/
 body{
     background-color: #257571;
     width: 100%;
@@ -20,7 +22,7 @@ body{
 }
 label{
     font-size: 23px;
-    color: #000000;
+    color: #fdfdfd;
     font-weight: bold;
 }
 
@@ -28,10 +30,17 @@ label{
     width: 55%;
     height: 30px;
     border-radius: 5px;
-    border: 1px solid #13c703;
+    border: solid 1px #fffefe;
     padding: 5px;
     font-size: 20px;
-    background-color: #aceaee;
+    background-color: #f8f8f8e7;
+      position: relative;
+  left: 20%;
+}
+.product-input:focus{
+    outline: none;
+    border: solid 1px #000000;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.938);
 }
 .row{
     display: flex;
@@ -45,6 +54,21 @@ label{
     flex-basis: 35%;
     display: flex;
     flex-direction: column;
+    background-color: #144945bf;
+    padding: 30px 20px;
+    border-radius: 10px;
+}
+.col-1 label{
+    font-size: 20px;
+    color: #d1d6d7;
+    font-weight: bold;
+    position: relative;
+    left: 20%;
+}
+.col-1 button{
+    position: relative;
+    left: 30%;
+        width: 40%;
 }
 .col-1 form{
     display: flex;
@@ -54,7 +78,10 @@ label{
 .col-2{
     flex-basis: 60%;
 }
-
+.col-2 button{
+    position: relative;
+    left: 33%;
+}
 
 table {
   width: 100%;
@@ -91,9 +118,27 @@ button{
     width: 30%;
 }
 button:hover {
-  background-color:  rgba(0, 174, 255, 0.493);
-  box-shadow: #3AAFA9 0px 0px 10px;
-  border: 1px solid #0f0f0f;
+  background-color:  rgba(40, 60, 67, 0.493);
+  box-shadow: #cfd0d0 0px 0px 10px;
+  border: 1px solid #ffffff;
+  color: rgb(255, 255, 255);
+}
+
+#remove-btn{
+   background-color: #17252A;
+    color: #FEFFFF;
+    border: none;
+    padding: 8px 15px;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 85px;
+}
+#remove-btn:hover {
+  background-color:  rgba(40, 60, 67, 0.493);
+  box-shadow: #cfd0d0 0px 0px 10px;
+  border: 1px solid #ffffff;
+  color: rgb(255, 255, 255);
 }
 .invoice-summary{
     background-color: #DEF2F1;
@@ -101,6 +146,12 @@ button:hover {
     border-radius: 10px;
     margin-top: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.temporary-field{
+  padding: 60px 20px;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
 }
 #invoice-summary{
     width: 50%;
@@ -118,8 +169,9 @@ input[type="date"] {
   background-color: #fdfdfd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: border-color 0.3s, box-shadow 0.3s;
-}
 
+}
+/*button disability*/
 .disabled-btn {
   background-color: #ccc;
   color: #666;
@@ -130,4 +182,18 @@ input[type="date"] {
   background-color: #ccc;
   color: #666;
   cursor: not-allowed;
+  box-shadow: none;
+  border: none;
 }
+.warning-message{
+    color: rgb(253, 251, 251);
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    left: 10px;
+    background-color: #c50808;
+    padding: 3px 6px;
+    width: 220px;
+    margin: 10px 0;
+}
+

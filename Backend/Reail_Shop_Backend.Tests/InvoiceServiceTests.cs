@@ -26,14 +26,13 @@ namespace Reail_Shop_Backend.Tests
             .Options;
 
             _dbContext = new RetailDBContext(options);
-
-            // Seed products
+           
             _dbContext.Products.Add(new Product
             {
                 ProductId = 1,
                 ProductName = "Test Product",
                 UnitPrice = 100,
-                ItemInvoice = new List<ItemInvoice>() // add this line
+                ItemInvoice = new List<ItemInvoice>()
             });
 
             _dbContext.SaveChanges();
@@ -48,6 +47,8 @@ namespace Reail_Shop_Backend.Tests
             _dbContext.Dispose();
         }
 
+        // Test for CreateInvoiceAsync method
+        // This test checks if the CreateInvoiceAsync method correctly creates an invoice
         [Test]
         public async Task CreateInvoiceAsync_ValidDto_CreatesInvoiceCorrectly()
         {
@@ -66,10 +67,9 @@ namespace Reail_Shop_Backend.Tests
                 }
             };
 
-            // Act
             var result = await _invoiceService.CreateInvoiceAsync(dto);
 
-            // Assert
+           
             Assert.IsNotNull(result);
             Assert.AreEqual(200, result.TotalAmount);
             Assert.AreEqual(180, result.BalanceAmount);

@@ -17,6 +17,7 @@ namespace Reail_Shop_Backend.Controllers
             _dbContext = dbContext;
         }
 
+        //Get All Products
         [HttpGet("getProducts")]
         public async Task<IActionResult> GetProductDetails()
         {

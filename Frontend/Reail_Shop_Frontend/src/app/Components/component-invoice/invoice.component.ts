@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { ToastService } from '../../services/toast.service';
 
 interface Product {
   productId: number;
@@ -10,22 +11,28 @@ interface Product {
   itemInvoice: any;
 }
 interface InvoiceResponse {
+  message: string;
   invoiceId: number;
   totalAmount: number;
   balanceAmount: number;
   transactionDate: string;}
+
 @Component({
   selector: 'app-component-invoice',
   standalone: true,
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.css'],
-  imports: [FormsModule, CommonModule],  // Import FormsModule in AppModule or standalone if needed
+  imports: [FormsModule, CommonModule],  
   providers: [ApiService]
 })
 export class InvoiceComponent implements OnInit {
+  
   products: Product[] = [];
   InvoiceResponse: InvoiceResponse [] = [];
   invoiceItems: any[] = [];
+  items: any[] = [];
+
+  messageColor: 'success' | 'error' = 'success';
   productId: number = 0;  
   selectedProductName: string = '';
   quantity: number = 1;
@@ -36,23 +43,19 @@ export class InvoiceComponent implements OnInit {
   totalAmount!: number;
   balanceAmount!: number;
   showInvoiceSummary: boolean = false;
+  showDateWarning = false;
 
-  items: any[] = [];
-
+  //current Date
   today = new Date().toISOString().split('T')[0];
 
-isFutureDate(): boolean {
-  return !!this.transactionDate && this.transactionDate > this.today;
-}
-
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private toastService: ToastService) {}
    ngOnInit() {
     this.apiService.getProductDetails().subscribe(data => {
       this.products = data;
-      console.log(this.products);
     });
-    
   }
+
+  //add item to tempory table
   addItem() {
     if (this.selectedProductName && this.quantity > 0) {
       this.items.push({
@@ -70,19 +73,26 @@ isFutureDate(): boolean {
       this.unitPrice = 0;
     }
   }
+
   onProductSelect() {
   const selected = this.products.find(p => p.productName === this.selectedProductName);
   this.unitPrice = selected ? selected.unitPrice : 0;
   this.productId = selected ? selected.productId : 0;
 }
 
-
+//remove item from tempory table
   removeItem(index: number) {
     this.items.splice(index, 1);
   }
 
-  submit() {
-    console.log('Items');
+//hide tempory table
+hideTemporyTable(): void {
+  this.showInvoiceSummary = false;
+}
+
+//create invoice
+  submit(invoiceForm: NgForm) {
+  this.showDateWarning = false;
     const invoiceData = {
       items: this.items,
       transactionDate: this.transactionDate
@@ -90,6 +100,8 @@ isFutureDate(): boolean {
 
     this.apiService.createInvoice(invoiceData).subscribe(
        (response: InvoiceResponse) => {
+      this.toastService.show(response.message, 'success');
+
       this.invoiceId = response.invoiceId;
       this.totalAmount = response.totalAmount;
       this.balanceAmount = response.balanceAmount;
@@ -98,17 +110,18 @@ isFutureDate(): boolean {
 
       this.apiService.getItemInvoice(this.invoiceId).subscribe(
         (itemResponse) => {
-          this.invoiceItems = itemResponse; // store in a new variable
+          this.invoiceItems = itemResponse;
           this.showInvoiceSummary = true;
         },
         (error) => {
-          console.error('Error fetching items in invoice:', error);
+          console.error('Error when fetching items in invoice:', error);
         }
       );
+        this.items = [];
     },
       (error) => {
-        console.error('Error creating invoice:', error);
-        // Handle error response
+       const errMsg = error.error?.message;
+      this.toastService.show(errMsg, 'error');
       }
     );
 

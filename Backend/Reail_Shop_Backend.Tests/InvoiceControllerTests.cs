@@ -21,13 +21,14 @@ namespace Reail_Shop_Backend.Tests
             _controller = new InvoiceController(null, _invoiceServiceMock.Object);
         }
 
+        // Test for CreateInvoice method
         [Test]
         public async Task CreateInvoice_ValidDto_ReturnsOk()
         {
-            // Arrange
+            
             var dto = new CreateInvoiceDto
             {
-                // fill with test data, e.g.
+                
                 TransactionDate = System.DateTime.Now,
                 Items = new System.Collections.Generic.List<ItemInvoiceDto>()
         {
@@ -57,11 +58,10 @@ namespace Reail_Shop_Backend.Tests
             _invoiceServiceMock
                 .Setup(s => s.CreateInvoiceAsync(dto))
                 .ReturnsAsync(createdInvoice);
-
-            // Act
+        
             var result = await _controller.CreateInvoice(dto);
 
-            // Assert
+           
             Assert.IsInstanceOf<OkObjectResult>(result);
 
             var okResult = result as OkObjectResult;

@@ -22,7 +22,7 @@ namespace Reail_Shop_Backend.Controllers
             _invoiceService = invoiceService;
         }
 
-        
+        //Create  new Invoice
         [HttpPost("createInvoice")]
         public async Task<IActionResult> CreateInvoice([FromBody] CreateInvoiceDto dto)
         {
@@ -45,12 +45,11 @@ namespace Reail_Shop_Backend.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error saving invoice: {ex.Message} - Inner: {ex.InnerException?.Message}");
+                throw new Exception($"Error creating invoice: {ex.Message} - Inner: {ex.InnerException?.Message}");
             }
         }
 
-     
-
+        //Get All items details for a specific invoice
         [HttpGet("itemInvoice/{invoiceId}")]
         public async Task<IActionResult> GetItemInvoiceById(int invoiceId)
         {

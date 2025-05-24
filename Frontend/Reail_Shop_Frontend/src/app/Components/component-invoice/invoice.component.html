@@ -1,11 +1,8 @@
 <header>
   <h1>MC Comouters</h1>
 </header>
-
 <body>
-
   <div class="container">
-
     <div class="row">
       <div class="col-1">
         <form #itemForm="ngForm">
@@ -18,68 +15,69 @@
               </option>
             </select>
           </div>
-
           <div>
             <label>Quantity:</label><br><br>
             <input class="product-input" type="number" [(ngModel)]="quantity" name="quantity" required />
           </div>
-
           <div>
             <label>Discount:</label><br><br>
             <input class="product-input" type="number" [(ngModel)]="discount" name="discount" required />
           </div><br>
-
           <div>
-            <button class="btn" type="button" (click)="addItem()">Add Item</button>
+            <button class="btn" type="button" (click)="addItem()" [disabled]="!itemForm.valid" 
+            [ngClass]="{'disabled-btn': !itemForm.valid}"
+            >Add Item</button>
           </div>
 
         </form>
 
       </div>
 
-      <div class="col-2 " >
+      <div class="col-2 ">
         <!-- Temporary Table of Items -->
+        <div class="temporary-field" *ngIf="!showInvoiceSummary">
+          <div class="invoice-summary">
+            <h1>Invoice Items</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Discount</th>
+                  <th>UintPrice</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of items; let i = index">
+                  <td>{{ item.productName }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.discount }}</td>
+                  <td>{{ item.unitPrice }}</td>
+                  <td><button id="remove-btn" (click)="removeItem(i)">Remove</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div><br>
+          <!-- Invoice Form -->
+          <form (ngSubmit)="submit(invoiceForm)" #invoiceForm="ngForm">
+            <label>Transaction Date </label>
+            <input type="date" [(ngModel)]="transactionDate" name="transactionDate" required   #transactionDateInput="ngModel" /><br><br>
 
-        <div class="invoice-summary">
-                  <h1>Invoice Items</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Discount</th>
-              <th>UintPrice</th>
-              <th>Remove</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of items; let i = index">
-              <td>{{ item.productName }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>{{ item.discount }}</td>
-              <td>{{ item.unitPrice }}</td>
-              <td><button (click)="removeItem(i)">Remove</button></td>
-            </tr>
-          </tbody>
-        </table>
-        </div><br>
-        <!-- Final Invoice Form -->
-        <form (ngSubmit)="submit()" #invoiceForm="ngForm">
-          <label>Transaction Date  </label>
-          <input type="date" [(ngModel)]="transactionDate" name="transactionDate" required /><br><br>
+            <div *ngIf="invoiceForm.invalid" class="warning-message">
+              Please select a transaction date.
+            </div>
+            <div *ngIf="transactionDate > today" class="warning-message">
+              Future dates are not allowed.
+            </div>
+            <button class="btn" id="create-invoice" type="submit" [disabled]="transactionDate > today"
+              [ngClass]="{'disabled-btn': transactionDate > today || invoiceForm.invalid}">Create Invoice</button>
+          </form>
+        </div>
+        <button *ngIf="showInvoiceSummary" (click)="hideTemporyTable()">Create New Invoice</button>
+        <div *ngIf="showInvoiceSummary" class="invoice-summary">
 
-          <div *ngIf="transactionDate > today" style="color: red;">
-    Future dates are not allowed.
-  </div>
-          <button class ="btn" id="create-invoice" type="submit" 
-          [disabled]="transactionDate > today"
-          [ngClass]="{'disabled-btn': transactionDate > today}"
-          >Create Invoice</button>
-        </form>
-
-        <!-- <div *ngIf="showInvoiceSummary"> -->
-        <div class="invoice-summary">
-
+          <!-- Final invoice -->
           <h1>Invoice</h1>
           <p>Invoice Number : {{invoiceId}}</p>
           <p>transaction Date : {{transactionDate}}</p>
@@ -105,20 +103,18 @@
               </tr>
             </tbody>
           </table>
-          <table id="invoice-summary" >
+          <table id="invoice-summary">
             <thead>
-            <tr>
-              <th>Invoice ID</th>
-              <th>Total Amount</th>
-              <th>Balance Amount</th>
-            </tr>
+              <tr>
+                <th>Total Amount</th>
+                <th>Balance Amount</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>{{ invoiceId }}</td>
-              <td>{{ totalAmount }}</td>
-              <td>{{ balanceAmount }}</td>
-            </tr>
+              <tr>
+                <td>{{ totalAmount }}</td>
+                <td>{{ balanceAmount }}</td>
+              </tr>
             </tbody>
           </table>
         </div>

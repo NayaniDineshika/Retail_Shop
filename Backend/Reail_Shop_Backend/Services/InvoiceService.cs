@@ -27,7 +27,10 @@ namespace Reail_Shop_Backend.Services
 
             foreach (var itemDto in dto.Items)
             {
+                // Find the products by ID
                 var product = products.FirstOrDefault(p => p.ProductId == itemDto.ProductId);
+
+                //Calculate the total price and discounted price per item
                 var totalProductPrice = product.UnitPrice * itemDto.Quantity;
                 decimal discountedPrice = totalProductPrice * (1 - itemDto.Discount / 100);
 
@@ -46,6 +49,7 @@ namespace Reail_Shop_Backend.Services
             {
                 TransactionDate = dto.TransactionDate,
                 ItemInvoice = itemsInvoice,
+                //Calculate the total amount and balance amount
                 TotalAmount = itemsInvoice.Sum(i => i.TotalPrice),
                 BalanceAmount = itemsInvoice.Sum(i => i.DiscountedPrice),
             };
